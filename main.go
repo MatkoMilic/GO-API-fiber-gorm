@@ -12,7 +12,7 @@ func welcome(c *fiber.Ctx) error {
 	return c.SendString("Welcome to Matko's GO API!")
 }
 
-func setupRoutes(app *fiber.App) {
+func setupUserRoutes(app *fiber.App) {
 	//get welcome
 	app.Get("/api", welcome)
 	//post user
@@ -27,12 +27,20 @@ func setupRoutes(app *fiber.App) {
 	app.Delete("/api/delete-user/:id", routes.DeleteUser)
 }
 
+func setupProductRoutes(app *fiber.App) {
+	//post product
+	app.Post("/api/create-product", routes.CreateProduct)
+	//get product
+	app.Get("/api/get-product/:id", routes.GetProduct)
+}
+
 func main() {
 	database.ConnectDb()
 
 	app := fiber.New()
 
-	setupRoutes(app)
+	setupUserRoutes(app)
+	setupProductRoutes(app)
 
 	log.Fatal(app.Listen(":3000"))
 }

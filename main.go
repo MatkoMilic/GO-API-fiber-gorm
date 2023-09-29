@@ -40,6 +40,15 @@ func setupProductRoutes(app *fiber.App) {
 	app.Put("/api/update-product/:id", routes.UpdateProduct)
 }
 
+func setupOrderRoutes(app *fiber.App) {
+	//create order
+	app.Post("/api/create-order", routes.CreateOrder)
+	//get orders
+	app.Get("/api/get-orders", routes.GetOrders)
+	//get order
+	app.Get("/api/get-order/:id", routes.GetOrder)
+}
+
 func main() {
 	database.ConnectDb()
 
@@ -47,6 +56,7 @@ func main() {
 
 	setupUserRoutes(app)
 	setupProductRoutes(app)
+	setupOrderRoutes(app)
 
 	log.Fatal(app.Listen(":3000"))
 }
